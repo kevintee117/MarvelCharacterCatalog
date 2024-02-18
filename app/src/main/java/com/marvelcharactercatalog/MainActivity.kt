@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.marvelcharactercatalog.ui.theme.ComicModel
 import com.marvelcharactercatalog.ui.theme.MarvelCharacterCatalogTheme
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,9 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
+    var comicName = mutableStateOf("DefaultText")
+    var comicDescription = mutableStateOf("DefaultText")
+    var comicImageUrl = mutableStateOf("http://i.annihil.us/u/prod/marvel/i/mg/d/30/64ecae5d8849d.jpg")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var comicModel = ComicModel("Default value","Default value","Default value" )
@@ -48,84 +52,71 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-}
-//@Composable
-//fun ComicDetails(comicId: Int) {
-//    var comic by remember { mutableStateOf<Comic?>(null) }
-//    var isLoading by remember { mutableStateOf(false) }
-//    var error by remember { mutableStateOf(false) }
-//
-//    // Launch the coroutine when the composable is first composed
-//    LaunchedEffect(comicId) {
-//        isLoading = true
-//        try {
-//            // Fetch comic details from the API
-//            val fetchedComic = fetchComic(comicId)
-//            comic = fetchedComic
-//        } catch (e: Exception) {
-//            // Handle errors
-//            error = true
-//        } finally {
-//            isLoading = false
-//        }
-//    }
-//
-//    // Display loading state, error state, or fetched comic details
-//    Column {
-//        if (isLoading) {
-//            Text(text = "Loading...")
-//        } else if (error) {
-//            Text(text = "Error occurred while fetching data")
-//        } else {
-//            comic?.let {
-//                ComicItem(comic = it)
-//            }
-//        }
-//    }
-//}
-
-@Composable
-fun ComicElements(comicModel: ComicModel) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Comic name: " + comicModel.comicName)
-        Text(text = "Comic description: " + comicModel.comicDescription)
-        Text(text = "Comic cover URL: " + comicModel.coverImageUrl)
+    @Composable
+    fun ComicElements(comicModel: ComicModel) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = "Comic name: ${comicName.value}")
+            Text(text = "Comic description: ${comicDescription.value}")
+            AsyncImage(model = comicImageUrl.value, contentDescription = "comic Image url" )
+        }
     }
-}
-suspend fun getComicData(id: Int): ComicModel {
-    val comicModel = ComicModel("Default value", "Default value", "Default value")
-    MarvelApiClient.getComic(
-        comicId = id,
-        onResponse = { comicResponse ->
-            if (comicResponse != null) {
-                if(comicResponse.code == 200) {
-                    val comic = comicResponse.data.results.firstOrNull()
-                    if (comic != null) {
-                        comicModel.comicName = comic.title
-                        comicModel.comicDescription = comic.description
-                        comicModel.coverImageUrl = comic.images[0].path +"."+ comic.images[0].extension
+
+    fun getComicData(id: Int): ComicModel {
+        val comicModel = ComicModel("Default value", "Default value", "Default value")
+        MarvelApiClient.getComic(
+            comicId = id,
+            onResponse = { comicResponse ->
+                if (comicResponse != null) {
+                    if(comicResponse.code == 200) {
+
+                        val comic = comicResponse.data.results.firstOrNull()
+                        if (comic != null) {
+                            comicName.value = comic.title
+                            comicDescription.value = comic.description
+                            comicImageUrl.value = convertHttpToHttps(comic.images[0].path +"."+ comic.images[0].extension)
+                        }
                     }
                 }
+                // Handle successful response
+            },
+            onFailure = { error ->
+                comicName.value = "No Comic Found"
+                comicDescription.value = "No Comic Found"
+                comicImageUrl.value = "No Comic Found"
             }
-            // Handle successful response
-        },
-        onFailure = { error ->
-            comicModel.comicName = "No Comic Found"
-            comicModel.comicDescription = "No Comic Found"
-            comicModel.coverImageUrl = "No Comic Found"
-        }
-    )
-    return comicModel
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun ComicPreview() {
-    val textComicModel = ComicModel("test","test", "test")
-    MarvelCharacterCatalogTheme {
-        ComicElements(textComicModel)
+        )
+        return comicModel
     }
+
+
+
+    @Preview(showBackground = true)
+    @Composable
+    fun ComicPreview() {
+        val textComicModel = ComicModel("test","test", "test")
+        MarvelCharacterCatalogTheme {
+            ComicElements(textComicModel)
+        }
+    }
+    fun convertHttpToHttps(httpUrl: String): String {
+        val httpsPrefix = "https://"
+        val httpPrefix = "http://"
+
+        return if (httpUrl.startsWith(httpPrefix)) {
+            // Replace 'http://' with 'https://'
+            httpsPrefix + httpUrl.substring(httpPrefix.length)
+        } else {
+            // If the URL already starts with 'https://', return it as is
+            if (httpUrl.startsWith(httpsPrefix)) {
+                httpUrl
+            } else {
+                // If the URL does not start with either 'http://' or 'https://', assume it's a relative URL and prepend 'https://'
+                httpsPrefix + httpUrl
+            }
+        }
+    }
+
 }
+
+
+
