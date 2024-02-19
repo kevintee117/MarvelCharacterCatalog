@@ -1,5 +1,6 @@
-package com.marvelcharactercatalog
+package com.marvelcharactercatalog.clients
 
+import com.marvelcharactercatalog.MarvelApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

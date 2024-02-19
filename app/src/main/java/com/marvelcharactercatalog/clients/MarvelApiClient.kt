@@ -1,0 +1,37 @@
+package com.marvelcharactercatalog.clients
+
+import com.marvelcharactercatalog.BuildConfig
+import com.marvelcharactercatalog.ComicResponse
+import com.marvelcharactercatalog.utils.MarvelApiUtility
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+object MarvelApiClient {
+    private const val API_KEY = BuildConfig.MARVEL_PUBLIC_KEY // Replace with your actual API key
+    private const val PRIVATE_KEY = BuildConfig.MARVEL_PRIVATE_KEY // Replace with your actual private key
+
+    fun getComic(comicId: Int, onResponse: (ComicResponse?) -> Unit, onFailure: (Throwable) -> Unit) {
+        val service = RetrofitClient.marvelApiService
+
+        val timeStamp = (System.currentTimeMillis() / 1000).toString()
+        val hash = MarvelApiUtility.generateHash(timeStamp, PRIVATE_KEY, API_KEY)
+
+        val call = service.getComic(comicId, API_KEY, timeStamp, hash)
+        call.enqueue(object : Callback<ComicResponse> {
+            override fun onResponse(call: Call<ComicResponse>, response: Response<ComicResponse>) {
+                if (response.isSuccessful) {
+                    onResponse(response.body())
+                } else {
+                    onFailure(Throwable("Failed to get comic"))
+                }
+            }
+
+            override fun onFailure(call: Call<ComicResponse>, t: Throwable) {
+                onFailure(t)
+            }
+        })
+    }
+
+
+}

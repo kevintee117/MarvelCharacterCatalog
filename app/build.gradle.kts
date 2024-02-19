@@ -1,3 +1,6 @@
+import java.security.Security.getProperty
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -6,7 +9,9 @@ plugins {
 android {
     namespace = "com.marvelcharactercatalog"
     compileSdk = 34
-
+    buildFeatures {
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.marvelcharactercatalog"
         minSdk = 21
@@ -18,6 +23,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String", "MARVEL_PUBLIC_KEY", properties.getProperty("MARVEL_PUBLIC_KEY"))
+        buildConfigField("String", "MARVEL_PRIVATE_KEY", properties.getProperty("MARVEL_PRIVATE_KEY"))
+
     }
 
     buildTypes {
@@ -27,6 +38,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+
+
         }
     }
     compileOptions {
@@ -60,6 +74,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
