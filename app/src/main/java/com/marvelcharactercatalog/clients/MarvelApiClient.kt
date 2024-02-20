@@ -1,16 +1,21 @@
 package com.marvelcharactercatalog.clients
 
 import com.marvelcharactercatalog.BuildConfig
-import com.marvelcharactercatalog.ComicResponse
 import com.marvelcharactercatalog.utils.MarvelApiUtility
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * object class used in order to properly call the marvel API
+ */
 object MarvelApiClient {
     private const val API_KEY = BuildConfig.MARVEL_PUBLIC_KEY // Replace with your actual API key
     private const val PRIVATE_KEY = BuildConfig.MARVEL_PRIVATE_KEY // Replace with your actual private key
 
+    /**
+     * Function call to get a specific comic and its information by ID
+     */
     fun getComic(comicId: Int, onResponse: (ComicResponse?) -> Unit, onFailure: (Throwable) -> Unit) {
         val service = RetrofitClient.marvelApiService
 

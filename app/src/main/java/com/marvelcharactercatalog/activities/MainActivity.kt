@@ -57,6 +57,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * composable function used for showing the comic title, image and description
+     */
     @Composable
     fun ComicElements() {
         Column(
@@ -65,42 +68,45 @@ class MainActivity : ComponentActivity() {
             Row(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-                AsyncImage(model = comicImageUrl.value, contentDescription = "comic Image url")
-                // Buttons
-                Column(modifier = Modifier.padding(start = 16.dp)) {
+                if (comicImageUrl.value.contains("https")) {
+                    AsyncImage(model = comicImageUrl.value, contentDescription = "comic Image url")
+                    // Buttons
+                    Column(modifier = Modifier.padding(start = 16.dp)) {
 
-                    Button(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .border(1.dp, Color.White, shape = MaterialTheme.shapes.small),
-                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.marvel_purple)),
-                        shape = MaterialTheme.shapes.small,
-                        onClick = { /* Do something when button 1 is clicked */ }) {
-                        Text("Read Now")
+                        Button(modifier = Modifier
+                            .padding(vertical = 8.dp),
+                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.marvel_purple)),
+                            shape = MaterialTheme.shapes.small,
+                            onClick = { /* Do something when button 1 is clicked */ }) {
+                            Text("Read Now")
+                        }
+                        Button(modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .border(1.dp, Color.White, shape = MaterialTheme.shapes.small),
+                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_background)),
+                            shape = MaterialTheme.shapes.small,
+                            onClick = { /* Do something when button 2 is clicked */ }) {
+                            Text("Mark as Read")
+                        }
+                        Button(modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .border(1.dp, Color.White, shape = MaterialTheme.shapes.small),
+                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_background)),
+                            shape = MaterialTheme.shapes.small,
+                            onClick = { /* Do something when button 2 is clicked */ }) {
+                            Text("Add to library")
+                        }
+                        Button(modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .border(1.dp, Color.White, shape = MaterialTheme.shapes.small),
+                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_background)),
+                            shape = MaterialTheme.shapes.small,
+                            onClick = { /* Do something when button 2 is clicked */ }) {
+                            Text("Read offline")
+                        }
                     }
-                    Button(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .border(1.dp, Color.White, shape = MaterialTheme.shapes.small),
-                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_background)),
-                        shape = MaterialTheme.shapes.small,
-                        onClick = { /* Do something when button 2 is clicked */ }) {
-                        Text("Mark as Read")
-                    }
-                    Button(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .border(1.dp, Color.White, shape = MaterialTheme.shapes.small),
-                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_background)),
-                        shape = MaterialTheme.shapes.small,
-                        onClick = { /* Do something when button 2 is clicked */ }) {
-                        Text("Add to library")
-                    }
-                    Button(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .border(1.dp, Color.White, shape = MaterialTheme.shapes.small),
-                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_background)),
-                        shape = MaterialTheme.shapes.small,
-                        onClick = { /* Do something when button 2 is clicked */ }) {
-                        Text("Read offline")
-                    }
+                } else {
+                    Text(fontSize = 30.sp, color = Color.White, text = "Image not found")
                 }
             }
             Text(
@@ -120,6 +126,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Function to call the MarvelApiClient and get the comic details and set the values
+     */
     private fun getComicData(id: Int) {
         MarvelApiClient.getComic(comicId = id, onResponse = { comicResponse ->
             if (comicResponse != null) {

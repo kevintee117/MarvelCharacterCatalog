@@ -1,7 +1,6 @@
-package com.marvelcharactercatalog
+package com.marvelcharactercatalog.clients
 
 import com.google.gson.annotations.SerializedName
-import java.util.Date
 
 data class ComicResponse(
     @SerializedName("code") val code: Int,

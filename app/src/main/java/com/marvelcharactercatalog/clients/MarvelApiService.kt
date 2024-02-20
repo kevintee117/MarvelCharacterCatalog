@@ -1,4 +1,4 @@
-package com.marvelcharactercatalog
+package com.marvelcharactercatalog.clients
 
 import retrofit2.Call
 import retrofit2.http.GET

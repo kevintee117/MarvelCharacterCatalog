@@ -5,6 +5,9 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 object MarvelApiUtility {
+    /**
+     * Helper method to generate the hash needed to access the Marvel developer API
+     */
     fun generateHash(timeStamp: String, privateKey: String, publicKey: String): String {
         if (timeStamp.isEmpty() || privateKey.isEmpty() || publicKey.isEmpty()) {
             return ""
@@ -24,7 +27,11 @@ object MarvelApiUtility {
         }
     }
 
-     fun convertHttpToHttps(httpUrl: String): String {
+    /**
+     * Helper method to convert an HTTP URL to HTTPS due to needing an HTTPS Url for the coil
+     * image API
+     */
+    fun convertHttpToHttps(httpUrl: String): String {
         val httpsPrefix = "https://"
         val httpPrefix = "http://"
          if (httpUrl.isEmpty()) {

@@ -1,9 +1,12 @@
 package com.marvelcharactercatalog.clients
 
-import com.marvelcharactercatalog.MarvelApiService
+import com.marvelcharactercatalog.clients.MarvelApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Client class to setup retrofit for using API calls
+ */
 object RetrofitClient {
     private const val BASE_URL = "https://gateway.marvel.com/v1/public/"
     private val retrofit: Retrofit by lazy {
