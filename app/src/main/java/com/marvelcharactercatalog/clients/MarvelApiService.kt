@@ -5,6 +5,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+/**
+ * Interface for calling the marvel comics API. Integrates the APIKey, timestamp and hash needed to
+ * call it properly
+ */
 interface MarvelApiService {
     @GET("comics/{comicId}")
     fun getComic(
