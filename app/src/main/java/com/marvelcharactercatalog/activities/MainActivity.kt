@@ -127,10 +127,16 @@ class MainActivity : ComponentActivity() {
 
                     val comic = comicResponse.data.results.firstOrNull()
                     if (comic != null) {
-                        comicName.value = comic.title
-                        comicDescription.value = comic.description
-                        comicImageUrl.value =
-                            MarvelApiUtility.convertHttpToHttps(comic.images[0].path + "." + comic.images[0].extension)
+                        if(comic.title.isNotEmpty()) {
+                            comicName.value = comic.title
+                        }
+                        if(comic.description.isNotEmpty()) {
+                            comicDescription.value = comic.description
+                        }
+                        if(comic.images.isNotEmpty()) {
+                            comicImageUrl.value =
+                                MarvelApiUtility.convertHttpToHttps(comic.images[0].path + "." + comic.images[0].extension)
+                        }
                     }
                 }
             }
