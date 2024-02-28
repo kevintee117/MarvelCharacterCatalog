@@ -123,7 +123,7 @@ class MainActivity : ComponentActivity() {
                 text = "The Story"
             )
             Text(
-                color = Color.White, text = comicDescription.value + "\n\n $MarvelAttribution"
+                color = Color.White, text = comicDescription.value + "\n\n$MarvelAttribution"
             )
         }
     }

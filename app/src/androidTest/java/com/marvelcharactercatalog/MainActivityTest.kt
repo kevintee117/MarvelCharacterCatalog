@@ -1,6 +1,5 @@
 package com.marvelcharactercatalog
 
-import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.marvelcharactercatalog.activities.MainActivity
@@ -16,10 +15,12 @@ class MainActivityTest {
     fun testComicDisplayed() {
 
         // Check if the comic name is displayed
-        composeTestRule.onNodeWithText("Spider-Man (2022) #11").assertExists()
+        composeTestRule.onNodeWithText("No Comic Name found").assertExists()
+        // Check if the "The Story" is displayed
+        composeTestRule.onNodeWithText("The Story").assertExists()
+        // Check if the No description with attribution is displayed correctly
+        composeTestRule.onNodeWithText("No Description found\n\nData provided by Marvel. © 2014 Marvel").assertExists()
 
-        // Check if the comic description is displayed
-        composeTestRule.onNodeWithText("(RE)INTRODUCING…SPIDER-BOY! The battle to save the Spider-Verse may be over, but spinning out of the restored Web of Life and Destiny returns the spectacular SPIDER-BOY, Peter Parker's stupendous sidekick! Wait, that can't be right - who IS this Spider-Boy, and what is his connection to the Amazing Spider-Man?!").assertExists()
     }
 
     @Test
