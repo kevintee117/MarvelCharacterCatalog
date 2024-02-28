@@ -10,8 +10,8 @@ import retrofit2.Response
  * object class used in order to properly call the marvel API
  */
 object MarvelApiClient {
-    private const val API_KEY = BuildConfig.MARVEL_PUBLIC_KEY // Replace with your actual API key
-    private const val PRIVATE_KEY = BuildConfig.MARVEL_PRIVATE_KEY // Replace with your actual private key
+    private const val API_KEY = BuildConfig.MARVEL_PUBLIC_KEY
+    private const val PRIVATE_KEY = BuildConfig.MARVEL_PRIVATE_KEY
 
     /**
      * Function call to get a specific comic and its information by ID

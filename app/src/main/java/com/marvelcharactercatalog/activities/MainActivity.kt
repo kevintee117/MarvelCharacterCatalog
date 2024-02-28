@@ -132,6 +132,7 @@ class MainActivity : ComponentActivity() {
     private fun getComicData(id: Int) {
         MarvelApiClient.getComic(comicId = id, onResponse = { comicResponse ->
             if (comicResponse != null) {
+                // Handle successful response
                 if (comicResponse.code == 200) {
 
                     val comic = comicResponse.data.results.firstOrNull()
@@ -149,10 +150,10 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-            // Handle successful response
-        }, onFailure = { error ->
-            comicName.value = "No Comic Found"
-            comicDescription.value = "No Comic Found"
+            //handle failed response
+        }, onFailure = {
+            comicName.value = "No Comic Found, please check internet connection"
+            comicDescription.value = "${it.message}"
             comicImageUrl.value = "No Comic Found"
         })
     }
