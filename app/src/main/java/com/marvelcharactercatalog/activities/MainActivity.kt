@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
     private var comicName = mutableStateOf("No Comic Name found")
     private var comicDescription = mutableStateOf("No Description found")
     private var comicImageUrl = mutableStateOf("No Image Url found")
+    private val MarvelAttribution = "Data provided by Marvel. © 2014 Marvel"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         runBlocking {
@@ -62,6 +63,7 @@ class MainActivity : ComponentActivity() {
      */
     @Composable
     fun ComicElements() {
+
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -121,7 +123,7 @@ class MainActivity : ComponentActivity() {
                 text = "The Story"
             )
             Text(
-                color = Color.White, text = comicDescription.value
+                color = Color.White, text = comicDescription.value + "\n\n $MarvelAttribution"
             )
         }
     }
