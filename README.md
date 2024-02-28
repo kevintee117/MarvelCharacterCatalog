@@ -8,7 +8,7 @@ Usage:
 1) git clone the project
 2) import into android studio
 3) Add your own API keys from the marvel developer website in the local.properties file. By default it is named MARVEL_PUBLIC_KEY and MARVEL_PRIVATE_KEY.
-5) Run in an emulator or oyur device of choice
+5) Run in an emulator or your device of choice
 
 
 
