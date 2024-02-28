@@ -3,6 +3,9 @@
 This app is a small little side project aimed at getting some data (Title, description and image) from the marvel comics developer API and displaying it in an Android app. 
 By default it displays comic ID 109961 which is the comic Spider Man(2022) #1.
 
+![Screenshot_20240228_112625](https://github.com/kevintee117/MarvelComicCatalog/assets/14015833/2ea21fe4-310c-4b5e-b6f9-f4d35ce380f5)
+
+
 ## Usage:
 
 1) git clone the project
