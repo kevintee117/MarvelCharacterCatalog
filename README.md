@@ -1,9 +1,9 @@
-Marvel Character Catalog
+# Marvel Comic Catalog Display
 
-This app is a small little side project aimed at getting some data from the marvel comics developer API and displaying it in an Android app. 
+This app is a small little side project aimed at getting some data (Title, description and image) from the marvel comics developer API and displaying it in an Android app. 
 By default it displays comic ID 109961 which is the comic Spider Man(2022) #1.
 
-Usage:
+## Usage:
 
 1) git clone the project
 2) import into android studio
@@ -12,22 +12,11 @@ Usage:
 
 
 
-Libraries used:
+## Libraries used:
 
--JUnit for unit tests
+* JUnit for unit tests
+* Jetpack Compose for UI and instrumented test cases
+* Retrofit for REST api calls
+* GSON for rest api calls
+* Coil for downloading and displaying images from a given URL
 
--Jetpack Compose for UI and instrumented test cases
-
--Retrofit for REST api calls
-
--GSON for rest api calls
-
--Coil for downloading and displaying images from a given URL
-
-Future Additions:
-
--Adding a separate fragment to input a comic ID to display
-
--Adding the ability to search for a specific character and view all their associated comics
-
--Being able to scroll through a list of marvel characters and then view their comics
